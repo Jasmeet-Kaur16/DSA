@@ -1,0 +1,20 @@
+#include <bits/stdc++.h> 
+pair < int , int > findSimilarity(vector < int > arr1, vector < int > arr2, int n, int m) 
+{
+    int count=0;
+    map<int,int> m1;
+    for (int i=0;i<n;i++)
+    {
+        m1[arr1[i]]++;
+    }
+
+    for(int i=0;i<m;i++)
+    {
+        if(m1[arr2[i]])
+        {
+            count++;
+        }
+    }
+
+    return {count,n+m-count};
+}
