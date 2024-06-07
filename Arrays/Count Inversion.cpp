@@ -21,8 +21,9 @@ long long getInversions(long long *arr, int n){
 //OPTIMAL ----MERGE SORT
 #include <bits/stdc++.h>
 
-void merge(long long *arr, int low, int mid, int high, long long &count)
+long long merge(long long *arr, int low, int mid, int high)
 {
+    long long count=0;
     int n = high - low + 1;
     vector<long long> temp(n);
     int left = low;
@@ -56,22 +57,25 @@ void merge(long long *arr, int low, int mid, int high, long long &count)
     {
         arr[low + i] = temp[i];
     }
+    return count;
 }
 
-void merge_sort(long long *arr, int low, int high, long long &count)
+long long merge_sort(long long *arr, int low, int high)
 {
+    long long count=0;
     if (low < high)
     {
         int mid = low + (high - low) / 2;
-        merge_sort(arr, low, mid, count);
-        merge_sort(arr, mid + 1, high, count);
-        merge(arr, low, mid, high, count);
+        count+=merge_sort(arr, low, mid);
+        count+=merge_sort(arr, mid + 1, high);
+        count+=merge(arr, low, mid, high);
     }
+    return count;
 }
 
 long long getInversions(long long *arr, int n)
 {
-    long long count = 0;
-    merge_sort(arr, 0, n - 1, count);
+    long long count=0;
+    count=merge_sort(arr, 0, n - 1);
     return count;
 }
